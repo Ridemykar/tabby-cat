@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      run: cargo build --verbose --release
+
+    - name: Strip
+      run: strip target/release/tabby-cat
+
+    - name: Rename
+      run: mv target/release/tabby-cat target/release/tabby-cat-linux64
+
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "target/release/tabby-cat-linux64"
+        artifactErrorsFailBuild: true
+        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+
+  build_macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: cargo build --verbose --release
+      
+      - name: Rename
+        run: mv target/release/tabby-cat target/release/tabby-cat-darwin64
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "target/release/tabby-cat-darwin64"
+          artifactErrorsFailBuild: true
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+
+  build_windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: cargo build --verbose --release
+
+      - name: Rename
+        run: rename target\release\tabby-cat.exe tabby-cat-win64.exe
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "target/release/tabby-cat-win64.exe"
+          artifactErrorsFailBuild: true
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }} 
