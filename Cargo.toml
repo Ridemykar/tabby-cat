@@ -6,4 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-webbrowser = "0.7.1"
+webbrowser = "0.8.0"
+
+# Uncomment this to shirnk the binary size
+# [profile.release]
+# panic = "abort"
+# strip = true
+# opt-level = "z"
+# lto = true
+# codegen-units = 1
