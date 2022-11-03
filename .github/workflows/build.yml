@@ -40,6 +40,7 @@ jobs:
           artifacts: "target/release/tabby-cat-linux64"
           token: ${{ secrets.GITHUB_TOKEN }}
           artifactErrorsFailBuild: true
+          allowUpdates: true
 
   build_macos:
     runs-on: macos-latest
@@ -69,6 +70,7 @@ jobs:
           artifacts: "target/release/tabby-cat-darwin64"
           token: ${{ secrets.GITHUB_TOKEN }}
           artifactErrorsFailBuild: true
+          allowUpdates: true
 
   build_windows:
     runs-on: windows-latest
@@ -98,3 +100,4 @@ jobs:
           artifacts: "target/release/tabby-cat-win64.exe"
           token: ${{ secrets.GITHUB_TOKEN }} 
           artifactErrorsFailBuild: true
+          allowUpdates: true
