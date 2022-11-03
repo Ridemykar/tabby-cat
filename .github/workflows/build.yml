@@ -12,7 +12,8 @@ jobs:
   build_linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repo 
+        uses: actions/checkout@v3
 
       - uses: actions/cache@v3
         with:
@@ -37,13 +38,14 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "target/release/tabby-cat-linux64"
+          token: ${{ secrets.GITHUB_TOKEN }}
           artifactErrorsFailBuild: true
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
 
   build_macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repo 
+        uses: actions/checkout@v3
 
       - uses: actions/cache@v3
         with:
@@ -65,13 +67,14 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "target/release/tabby-cat-darwin64"
+          token: ${{ secrets.GITHUB_TOKEN }}
           artifactErrorsFailBuild: true
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
 
   build_windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repo 
+        uses: actions/checkout@v3
 
       - uses: actions/cache@v3
         with:
@@ -87,11 +90,11 @@ jobs:
         run: cargo build --verbose --release
 
       - name: Rename
-        run: rename target\release\tabby-cat.exe tabby-cat-win64.exe
+        run: ren target\release\tabby-cat.exe tabby-cat-win64.exe
 
       - name: Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "target/release/tabby-cat-win64.exe"
+          token: ${{ secrets.GITHUB_TOKEN }} 
           artifactErrorsFailBuild: true
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }} 
