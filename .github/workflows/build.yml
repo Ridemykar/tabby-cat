@@ -12,28 +12,48 @@ jobs:
   build_linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Build
-      run: cargo build --verbose --release
+      - uses: actions/cache@v3
+        with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Strip
-      run: strip target/release/tabby-cat
+      - name: Build
+        run: cargo build --verbose --release
 
-    - name: Rename
-      run: mv target/release/tabby-cat target/release/tabby-cat-linux64
+      - name: Strip
+        run: strip target/release/tabby-cat
 
-    - name: Release
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "target/release/tabby-cat-linux64"
-        artifactErrorsFailBuild: true
-        token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+      - name: Rename
+        run: mv target/release/tabby-cat target/release/tabby-cat-linux64
+
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "target/release/tabby-cat-linux64"
+          artifactErrorsFailBuild: true
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
 
   build_macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build
         run: cargo build --verbose --release
@@ -52,6 +72,16 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build
         run: cargo build --verbose --release
