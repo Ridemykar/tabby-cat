@@ -3,10 +3,11 @@ name = "tabby-cat"
 version = "0.2.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 webbrowser = "0.8.0"
+
+[target.'cfg(windows)'.dependencies]
+windows = "0.43.0"
 
 # Uncomment this to shirnk the binary size
 # [profile.release]
