@@ -17,12 +17,6 @@ fn main() {
         "https://rule43.xxx",
     ];
 
-    if let Err(e) = open_tab(targets[0]) {
-        println!("{:#?}", e);
-        panic!("Failed to execute program!");
-    }
-    thread::sleep(time::Duration::from_millis(2));
-
     loop {
         let target = targets[rng.gen_range(0..(targets.len() - 1))];
 
