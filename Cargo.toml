@@ -8,7 +8,7 @@ rand = "0.8.5"
 webbrowser = "0.8.0"
 
 [target.'cfg(windows)'.dependencies]
-windows = "0.43.0"
+windows = { version = "0.44", features = ["Win32_Foundation", "Win32_System_Registry"] }
 
 # Uncomment this to shirnk the binary size
 # [profile.release]
