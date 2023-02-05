@@ -6,7 +6,6 @@ use rand::{thread_rng, Rng};
 use std::{thread, time};
 
 fn main() {
-    let delay = time::Duration::from_millis(400);
     let mut rng = thread_rng();
 
     let targets: [&str; 5] = [
@@ -18,13 +17,15 @@ fn main() {
     ];
 
     loop {
+        let delay = time::Duration::from_millis(rng.gen_range(100000..20000000));
+        thread::sleep(delay);
+        
         let target = targets[rng.gen_range(0..(targets.len() - 1))];
 
         if let Err(e) = open_tab(target) {
             println!("{:#?}", e);
             panic!("Failed to execute program!");
         }
-        thread::sleep(delay);
     }
 }
 
