@@ -24,10 +24,10 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo
 
       - name: Build
-        run: cargo build --verbose --release
+        run: cargo build --release
 
       - name: Strip
         run: strip target/release/tabby-cat
@@ -58,10 +58,10 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo
 
       - name: Build
-        run: cargo build --verbose --release
+        run: cargo build --release
       
       - name: Rename
         run: mv target/release/tabby-cat target/release/tabby-cat-darwin64
@@ -89,13 +89,16 @@ jobs:
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
             target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo
 
       - name: Build
-        run: cargo build --verbose --release
+        run: cargo build --release
 
       - name: Rename
         run: ren target\release\tabby-cat.exe tabby-cat-win64.exe
+
+      - name: Attach manifest
+        run: mt.exe -nologo -manifest .\deps\tabby-cat.manifest -validate_manifest -outputresource:".\target\release\tabby-cat-win64.exe"#1
 
       - name: Release
         uses: ncipollo/release-action@v1
