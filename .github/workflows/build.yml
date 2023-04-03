@@ -9,70 +9,70 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build_linux:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo 
-        uses: actions/checkout@v3
+  # build_linux:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout Repo 
+  #       uses: actions/checkout@v3
 
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo
+  #     - name: Cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: |
+  #           ~/.cargo/bin/
+  #           ~/.cargo/registry/index/
+  #           ~/.cargo/registry/cache/
+  #           ~/.cargo/git/db/
+  #           target/
+  #         key: ${{ runner.os }}-cargo
 
-      - name: Build
-        run: cargo build --release
+  #     - name: Build
+  #       run: cargo build --release
 
-      - name: Strip
-        run: strip target/release/tabby-cat
+  #     - name: Strip
+  #       run: strip target/release/tabby-cat
 
-      - name: Rename
-        run: mv target/release/tabby-cat target/release/tabby-cat-linux64
+  #     - name: Rename
+  #       run: mv target/release/tabby-cat target/release/tabby-cat-linux64
 
-      - name: Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "target/release/tabby-cat-linux64"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifactErrorsFailBuild: true
-          allowUpdates: true
+  #     - name: Release
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: "target/release/tabby-cat-linux64"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         artifactErrorsFailBuild: true
+  #         allowUpdates: true
 
-  build_macos:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout Repo 
-        uses: actions/checkout@v3
+  # build_macos:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout Repo 
+  #       uses: actions/checkout@v3
 
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo
+  #     - name: Cache
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: |
+  #           ~/.cargo/bin/
+  #           ~/.cargo/registry/index/
+  #           ~/.cargo/registry/cache/
+  #           ~/.cargo/git/db/
+  #           target/
+  #         key: ${{ runner.os }}-cargo
 
-      - name: Build
-        run: cargo build --release
+  #     - name: Build
+  #       run: cargo build --release
       
-      - name: Rename
-        run: mv target/release/tabby-cat target/release/tabby-cat-darwin64
+  #     - name: Rename
+  #       run: mv target/release/tabby-cat target/release/tabby-cat-darwin64
 
-      - name: Release
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "target/release/tabby-cat-darwin64"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          artifactErrorsFailBuild: true
-          allowUpdates: true
+  #     - name: Release
+  #       uses: ncipollo/release-action@v1
+  #       with:
+  #         artifacts: "target/release/tabby-cat-darwin64"
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         artifactErrorsFailBuild: true
+  #         allowUpdates: true
 
   build_windows:
     runs-on: windows-latest
